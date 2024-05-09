@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Điện thoại</string>
+    <string name="call_input_hint">Nhập số điện thoại…</string>
+</resources>
