@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telecom.TelecomManager;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import java.util.ArrayList;
@@ -80,5 +81,14 @@ public class DialerActivity extends AppCompatActivity {
         if (systemService != null && !systemService.getDefaultDialerPackage().equals(this.getPackageName())) {
         startActivity((new Intent(ACTION_CHANGE_DEFAULT_DIALER)).putExtra(EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, this.getPackageName()));
         }
+    }
+
+    public void onContactsButtonClicked(View view) {
+        Intent intent = new Intent(this, KontactActivity.class);
+        startActivity(intent);
+    }
+
+    public void onDialerButtonClicked(View view) {
+;
     }
 }
