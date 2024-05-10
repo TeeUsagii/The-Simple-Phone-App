@@ -60,6 +60,20 @@ public class DBHelper extends SQLiteOpenHelper {
         return contactList;
     }
 
+    public void deleteContact(Contact contact) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_CONTACTS, COLUMN_ID + " = ?", new String[]{String.valueOf(contact.getId())});
+        db.close();
+    }
+
+    public void updateContact(Contact contact) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, contact.getName());
+        values.put(COLUMN_PHONE_NUMBER, contact.getPhoneNumber());
+        db.update(TABLE_CONTACTS, values, COLUMN_ID + " = ?", new String[]{String.valueOf(contact.getId())});
+        db.close();
+    }
 
 
     @Override

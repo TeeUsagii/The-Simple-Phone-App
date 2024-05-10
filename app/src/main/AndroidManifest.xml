@@ -59,6 +59,11 @@
         <activity android:name=".CallActivity" />
 
         <activity android:name=".DialerActivity" />
+
+        <activity android:name=".ContactDetailActivity" />
+
+        <activity android:name=".EditContactActivity" />
+
     </application>
 
 

@@ -1,6 +1,7 @@
 package exemple.com.simple_phone;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,17 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         Contact contact = contactList.get(position);
         holder.textViewName.setText(contact.getName());
         holder.textViewPhoneNumber.setText(contact.getPhoneNumber());
+
+        // Xử lý sự kiện khi người dùng nhấp vào một liên hệ
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Truyền dữ liệu của liên hệ sang ContactDetailActivity
+                Intent intent = new Intent(context, ContactDetailActivity.class);
+                intent.putExtra("contact", contact);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
