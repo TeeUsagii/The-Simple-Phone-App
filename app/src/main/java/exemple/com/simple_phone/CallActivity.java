@@ -22,6 +22,8 @@ public class CallActivity extends  Activity {
     private String number;
     private Button answer, hangup;
     private TextView callInfo;
+    private  TextView callInfoNumber;
+    private  TextView callInfoState;
     private DBHelper dbHelper;
 
 
@@ -35,6 +37,9 @@ public class CallActivity extends  Activity {
         answer = findViewById(R.id.answer);
         hangup = findViewById(R.id.hangup);
         callInfo = findViewById(R.id.callInfo);
+        callInfoNumber = findViewById(R.id.callInfoNumber);
+        callInfoState = findViewById(R.id.callInfoState);
+
 
         number = getIntent().getData().getSchemeSpecificPart();
     }
@@ -76,8 +81,9 @@ public class CallActivity extends  Activity {
         String userName = dbHelper.getContactNameByPhoneNumber(number);
 
     // Hiển thị thông tin cuộc gọi (số điện thoại và tên người dùng) trên giao diện
-        callInfo.setText((userName != null ? "\n" + userName + "" : "") + "\n \n" + number + "\n \n" + CallStateString.asString(state));
-
+        callInfo.setText((userName != null ? "\n" + userName + "" : ""));
+        callInfoNumber.setText(number);
+        callInfoState.setText(CallStateString.asString(state));
 
         if (state == Call.STATE_RINGING)
             answer.setVisibility(View.VISIBLE);

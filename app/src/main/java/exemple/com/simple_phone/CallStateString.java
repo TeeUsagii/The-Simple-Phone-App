@@ -13,7 +13,7 @@ final class CallStateString {
                 state = "Gọi mới";
                 break;
             case 1:
-                state = "Đang gọi";
+                state = "Đang gọi...";
                 break;
             case 2:
                 state = "Cuộc gọi đến";
@@ -37,7 +37,7 @@ final class CallStateString {
                 state = "SELECT_PHONE_ACCOUNT";
                 break;
             case 9:
-                state = "Đang kết nối";
+                state = "Đang kết nối...";
                 break;
             case 10:
                 state = "Đang ngắt kết nối";
