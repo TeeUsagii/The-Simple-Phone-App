@@ -4,28 +4,33 @@
     android:orientation="vertical"
     android:layout_marginTop="400dp"
     android:padding="16dp">
-
-    <TextView
-        android:id="@+id/textViewTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sửa thông tin liên hệ"
-        android:textSize="24sp"
-        android:layout_marginBottom="15dp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/editTextName"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textNameInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tên" />
+        android:layout_marginTop="15dp">
 
-    <EditText
-        android:id="@+id/editTextPhoneNumber"
-        android:layout_marginTop="15dp"
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tên" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/phoneNumberInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Số điện thoại"
-        android:inputType="number" />
+        android:layout_marginTop="15dp">
+
+        <EditText
+            android:id="@+id/editTextPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Số điện thoại"
+            android:inputType="number" />
+
+    </android.support.design.widget.TextInputLayout>
 
 </LinearLayout>

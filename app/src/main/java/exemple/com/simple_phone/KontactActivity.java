@@ -27,10 +27,13 @@ public class KontactActivity extends AppCompatActivity {
     private ContactAdapter contactAdapter;
     private static final int REQUEST_CODE_EDIT_CONTACT = 1;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.kontact);
+
+        setTitle("Danh bạ");
 
         buttonAddContact = findViewById(R.id.buttonAddContact);
         recyclerViewContacts = findViewById(R.id.recyclerViewContacts);

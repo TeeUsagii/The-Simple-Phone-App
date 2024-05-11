@@ -32,6 +32,8 @@ public class CallActivity extends  Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call);
 
+        setTitle("Điện thoại");
+
         dbHelper = new DBHelper(this);
 
         answer = findViewById(R.id.answer);

@@ -43,6 +43,8 @@ public class ContactDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contact_detail);
 
+        setTitle("Thông tin liên hệ");
+
         // Nhận dữ liệu của liên hệ từ Intent
         Contact contact = getIntent().getParcelableExtra("contact");
 
