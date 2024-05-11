@@ -2,11 +2,19 @@
 <project version="4">
   <component name="AndroidLayouts">
     <shared>
-      <config />
+      <config>
+        <device id="_device_class_phone" />
+        <device id="pixel_tablet" />
+        <device id="pixel_7" />
+        <device id="tv_4k" />
+        <device id="wearos_small_round" />
+        <device id="_device_class_foldable" />
+      </config>
     </shared>
     <layouts>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_call.xml">
         <config>
+          <state>landscape</state>
           <theme>@style/AppTheme</theme>
         </config>
       </layout>
@@ -17,31 +25,37 @@
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/contact_detail.xml">
         <config>
+          <state>landscape</state>
           <theme>@style/AppTheme</theme>
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/contact_item.xml">
         <config>
+          <state>landscape</state>
           <theme>@style/AppTheme</theme>
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_add_contact.xml">
         <config>
+          <state>landscape</state>
           <theme>@style/AppTheme</theme>
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/edit_contact_dialog.xml">
         <config>
+          <state>landscape</state>
           <theme>@style/AppTheme</theme>
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/kontact.xml">
         <config>
+          <state>landscape</state>
           <theme>@style/AppTheme</theme>
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/navigation.xml">
         <config>
+          <state>landscape</state>
           <theme>@style/AppTheme</theme>
         </config>
       </layout>

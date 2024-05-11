@@ -1,6 +1,7 @@
 package exemple.com.simple_phone;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,9 +10,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telecom.TelecomManager;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import java.util.ArrayList;
+import android.view.inputmethod.InputMethodManager;
+
 
 import static android.Manifest.permission.CALL_PHONE;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
@@ -25,19 +30,62 @@ public class DialerActivity extends AppCompatActivity {
 
     Button callButton; // Khai báo nút gọi
 
-        @Override
-    public void onCreate(Bundle savedInstanceState){
+    private void appendNumber(String number) {
+        String currentText = phoneNumberInput.getText().toString();
+        phoneNumberInput.setText(currentText + number);
+    }
+
+    private void deleteLastNumber() {
+        String currentText = phoneNumberInput.getText().toString();
+        if (!currentText.isEmpty()) {
+            String newText = currentText.substring(0, currentText.length() - 1);
+            phoneNumberInput.setText(newText);
+        }
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dialer);
 
         phoneNumberInput = findViewById(R.id.phoneNumberInput);
         callButton = findViewById(R.id.callButton);
-        // get Intent data (tel number)
+
+        int[] buttonIds = {R.id.button0, R.id.button1, R.id.button2, R.id.button3, R.id.button4,
+                R.id.button5, R.id.button6, R.id.button7, R.id.button8, R.id.button9};
+
+        for (int id : buttonIds) {
+            Button button = findViewById(id);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    appendNumber(button.getText().toString());
+                }
+            });
+        }
+
+        Button delButton = findViewById(R.id.DelButton);
+        delButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteLastNumber();
+            }
+        });
+
+        callButton.setOnClickListener(v -> makeCall());
+
         if (getIntent().getData() != null)
             phoneNumberInput.setText(getIntent().getData().getSchemeSpecificPart());
 
-            callButton.setOnClickListener(v -> makeCall());
-        }
+        offerReplacingDefaultDialer();
+
+        phoneNumberInput.setOnEditorActionListener((v, actionId, event) -> {
+            makeCall();
+            return true;
+        });
+    }
+
 
     @Override
     public void onStart() {
@@ -91,4 +139,5 @@ public class DialerActivity extends AppCompatActivity {
     public void onDialerButtonClicked(View view) {
 ;
     }
+
 }
