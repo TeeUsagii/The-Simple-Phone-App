@@ -43,8 +43,7 @@ public class KontactActivity extends AppCompatActivity {
         recyclerViewContacts.setAdapter(contactAdapter);
 
         // Thiết lập layout manager cho RecyclerView
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerViewContacts.setLayoutManager(layoutManager);
+        recyclerViewContacts.setLayoutManager(new LinearLayoutManager(this));
 
         // Thực hiện lấy dữ liệu từ cơ sở dữ liệu và thêm vào Adapter
         DBHelper dbHelper = new DBHelper(this);
