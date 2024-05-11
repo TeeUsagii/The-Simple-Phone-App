@@ -22,11 +22,15 @@ public class CallActivity extends  Activity {
     private String number;
     private Button answer, hangup;
     private TextView callInfo;
+    private DBHelper dbHelper;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call);
+
+        dbHelper = new DBHelper(this);
 
         answer = findViewById(R.id.answer);
         hangup = findViewById(R.id.hangup);
@@ -68,8 +72,12 @@ public class CallActivity extends  Activity {
     // Set the UI for the call
     @SuppressLint("SetTextI18n")
     public void updateUi(Integer state) {
-        // Set callInfo text by the state
-        callInfo.setText(CallStateString.asString(state).toLowerCase()+"\n"+number);
+        // Truy xuất tên người dùng từ cơ sở dữ liệu
+        String userName = dbHelper.getContactNameByPhoneNumber(number);
+
+    // Hiển thị thông tin cuộc gọi (số điện thoại và tên người dùng) trên giao diện
+        callInfo.setText((userName != null ? "\n" + userName + "" : "") + "\n \n" + number + "\n \n" + CallStateString.asString(state));
+
 
         if (state == Call.STATE_RINGING)
             answer.setVisibility(View.VISIBLE);

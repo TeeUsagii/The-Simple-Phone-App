@@ -1,7 +1,9 @@
 package exemple.com.simple_phone;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +19,28 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     private List<Contact> contactList;
     private Context context;
 
+    // Định nghĩa BroadcastReceiver
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Cập nhật lại danh sách liên hệ
+            DBHelper dbHelper = new DBHelper(context);
+            List<Contact> updatedContacts = dbHelper.getAllContacts();
+            setContacts(updatedContacts);
+        }
+    };
+
+
     public ContactAdapter(Context context) {
         this.context = context;
         contactList = new ArrayList<>();
+
+        // Đăng ký BroadcastReceiver ở đây
+        IntentFilter intentFilter = new IntentFilter("UPDATE_CONTACT_LIST");
+        context.registerReceiver(broadcastReceiver, intentFilter);
     }
+
+
 
     public void setContacts(List<Contact> contacts) {
         this.contactList = contacts;
@@ -31,6 +51,18 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         contactList.add(contact);
         notifyDataSetChanged();
     }
+
+    public void updateContact(Contact contact) {
+        for (int i = 0; i < contactList.size(); i++) {
+            if (contactList.get(i).getId() == contact.getId()) {
+                contactList.set(i, contact);
+                notifyItemChanged(i);
+                break;
+            }
+        }
+    }
+
+
 
     @NonNull
     @Override
@@ -73,5 +105,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         }
     }
 
+    // Đảm bảo rằng bạn hủy đăng ký BroadcastReceiver khi không cần nữa
+    public void onDestroy() {
+        context.unregisterReceiver(broadcastReceiver);
+    }
 
 }

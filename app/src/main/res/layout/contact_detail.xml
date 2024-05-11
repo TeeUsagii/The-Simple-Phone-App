@@ -10,16 +10,17 @@
         android:id="@+id/textViewName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:textStyle="bold"
+        android:layout_marginTop="70dp"
         android:layout_marginBottom="8dp"/>
 
     <TextView
         android:id="@+id/textViewPhoneNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginBottom="16dp"/>
+        android:textSize="18sp"
+        android:layout_marginBottom="20dp"/>
 
     <Button
         android:id="@+id/buttonEdit"
@@ -34,14 +35,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Xóa"
-        android:textColor="#000"
+        android:textColor="#fff"
+        android:backgroundTint="@color/colocrRed"
         android:layout_marginBottom="8dp"/>
 
     <Button
         android:id="@+id/buttonCall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/colocrGreen"
         android:text="Gọi"
-        android:textColor="#000"/>
+        android:textColor="#fff"/>
 
 </LinearLayout>
