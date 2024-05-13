@@ -9,24 +9,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.support.v7.app.AppCompatActivity;
-
-import java.util.ArrayList;
-import java.util.List;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ContactDetailActivity extends AppCompatActivity {
-    private ContactAdapter contactAdapter;
+
 
     // Trong phương thức cập nhật liên hệ
     Intent broadcastIntent = new Intent("UPDATE_CONTACT_LIST");
 
-    public void sendBroadcastMethod() {
-        // Tạo Intent
-        Intent broadcastIntent = new Intent("UPDATE_CONTACT_LIST");
 
-        // Gửi broadcast
-        sendBroadcast(broadcastIntent);
-    }
 
     private void callContact(Contact contact) {
         // Thực hiện logic để gọi liên hệ ở đây
@@ -42,32 +33,29 @@ public class ContactDetailActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contact_detail);
-
         setTitle("Thông tin liên hệ");
 
-        // Nhận dữ liệu của liên hệ từ Intent
+        // Lấy dữ liệu của liên hệ từ Intent
         Contact contact = getIntent().getParcelableExtra("contact");
 
-        // Khai báo biến textViewName
+        // Khai báo các view
         TextView textViewName = findViewById(R.id.textViewName);
         TextView textViewPhoneNumber = findViewById(R.id.textViewPhoneNumber);
 
-        // Xử lý sự kiện khi người dùng nhấn vào nút sửa
+        // Xử lý sự kiện nút sửa
         Button buttonEdit = findViewById(R.id.buttonEdit);
         buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Thực hiện hoạt động sửa liên hệ
                 editContact(contact);
             }
         });
 
-        // Xử lý sự kiện khi người dùng nhấn vào nút xóa
+        // Xử lý sự kiện nút xóa
         Button buttonDelete = findViewById(R.id.buttonDelete);
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Thực hiện hoạt động xóa liên hệ
                 deleteContact(contact);
             }
         });
@@ -83,7 +71,11 @@ public class ContactDetailActivity extends AppCompatActivity {
         });
 
     }
-
+    private void sendBroadcastToUpdateContactList() {
+        // Gửi broadcast
+        Intent intent = new Intent("UPDATE_CONTACT_LIST");
+        sendBroadcast(intent);
+    }
     private void editContact(Contact contact) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Sửa Liên Hệ");
@@ -114,11 +106,13 @@ public class ContactDetailActivity extends AppCompatActivity {
                 // Gửi broadcast để thông báo cho KontactActivity cần cập nhật lại danh sách liên hệ
                 Intent intent = new Intent("UPDATE_CONTACT_LIST");
                 sendBroadcast(intent);
+                sendBroadcastToUpdateContactList();
 
                 // Trả về kết quả cho KontactActivity và kết thúc activity hiện tại
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("updatedContact", contact);
                 setResult(RESULT_OK, returnIntent);
+
                 finish();
             }
         });
@@ -135,27 +129,28 @@ public class ContactDetailActivity extends AppCompatActivity {
 
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Lấy lại thông tin của liên hệ từ cơ sở dữ liệu và hiển thị lên giao diện
-        loadContactInformation();
-    }
 
-    private void loadContactInformation() {
-        // Nhận dữ liệu của liên hệ từ Intent hoặc từ cơ sở dữ liệu (tùy thuộc vào cách bạn thiết lập)
-        Contact contact = getIntent().getParcelableExtra("contact");
-
-        // Hiển thị thông tin chi tiết của liên hệ trên layout
-        TextView textViewName = findViewById(R.id.textViewName);
-        TextView textViewPhoneNumber = findViewById(R.id.textViewPhoneNumber);
-
-        // Kiểm tra xem contact có tồn tại không trước khi hiển thị
-        if (contact != null) {
-            textViewName.setText(contact.getName());
-            textViewPhoneNumber.setText(contact.getPhoneNumber());
-        }
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        // Lấy lại thông tin của liên hệ từ cơ sở dữ liệu và hiển thị lên giao diện
+//        loadContactInformation();
+//    }
+//
+//    private void loadContactInformation() {
+//        // Nhận dữ liệu của liên hệ từ Intent hoặc từ cơ sở dữ liệu (tùy thuộc vào cách bạn thiết lập)
+//        Contact contact = getIntent().getParcelableExtra("contact");
+//
+//        // Hiển thị thông tin chi tiết của liên hệ trên layout
+//        TextView textViewName = findViewById(R.id.textViewName);
+//        TextView textViewPhoneNumber = findViewById(R.id.textViewPhoneNumber);
+//
+//        // Kiểm tra xem contact có tồn tại không trước khi hiển thị
+//        if (contact != null) {
+//            textViewName.setText(contact.getName());
+//            textViewPhoneNumber.setText(contact.getPhoneNumber());
+//        }
+//    }
 
     private void deleteContact(Contact contact) {
         // Hiển thị hộp thoại xác nhận xóa
@@ -167,10 +162,11 @@ public class ContactDetailActivity extends AppCompatActivity {
                         DBHelper dbHelper = new DBHelper(ContactDetailActivity.this);
                         dbHelper.deleteContact(contact);
 
-                        // Quay trở lại KontactActivity
-                        Intent intent = new Intent(ContactDetailActivity.this, KontactActivity.class);
-                        startActivity(intent);
-                        finish(); // Đóng ContactDetailActivity
+                        // Gửi broadcast để thông báo cho KontactActivity cần cập nhật lại danh sách liên hệ
+                        sendBroadcastToUpdateContactList();
+
+                        // Đóng ContactDetailActivity
+                        finish();
                     }
                 })
                 .setNegativeButton("Không", new DialogInterface.OnClickListener() {
@@ -180,6 +176,12 @@ public class ContactDetailActivity extends AppCompatActivity {
                 });
         // Hiển thị hộp thoại
         builder.create().show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 
 

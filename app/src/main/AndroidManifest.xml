@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28"
+        android:maxSdkVersion="31"
         tools:ignore="ScopedStorage" />
 
     <application
@@ -19,9 +19,8 @@
         android:theme="@style/AppTheme">
 
         <activity
-
-
             android:name=".KontactActivity"
+            android:exported="true"
             android:windowSoftInputMode="stateAlwaysVisible|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +29,6 @@
 
             <intent-filter>
                 <!-- Handle links from other applications -->
-
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.DIAL" />
                 <!-- Populate the system chooser -->
@@ -47,6 +45,7 @@
 
         <service
             android:name=".CallService"
+            android:exported="true"
             android:permission="android.permission.BIND_INCALL_SERVICE">
             <meta-data
                 android:name="android.telecom.IN_CALL_SERVICE_UI"
@@ -57,14 +56,9 @@
         </service>
 
         <activity android:name=".CallActivity" />
-
         <activity android:name=".DialerActivity" />
-
         <activity android:name=".ContactDetailActivity" />
 
-        <activity android:name=".EditContactActivity" />
-
     </application>
-
 
 </manifest>

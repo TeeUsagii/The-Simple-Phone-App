@@ -5,18 +5,19 @@ import static android.app.Activity.RESULT_OK;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.support.v7.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,30 +28,36 @@ public class KontactActivity extends AppCompatActivity {
     private ContactAdapter contactAdapter;
     private static final int REQUEST_CODE_EDIT_CONTACT = 1;
 
+    // Khai báo BroadcastReceiver
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            loadContactList();
+        }
+    };
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.kontact);
-
         setTitle("Danh bạ");
 
+        // Đăng ký BroadcastReceiver để lắng nghe các broadcast từ ContactDetailActivity
+        IntentFilter intentFilter = new IntentFilter("UPDATE_CONTACT_LIST");
+        registerReceiver(broadcastReceiver, intentFilter);
+
+        // Khởi tạo các view và RecyclerView
         buttonAddContact = findViewById(R.id.buttonAddContact);
         recyclerViewContacts = findViewById(R.id.recyclerViewContacts);
 
         // Khởi tạo ContactAdapter
         contactAdapter = new ContactAdapter(this);
         recyclerViewContacts.setAdapter(contactAdapter);
-
-        // Thiết lập layout manager cho RecyclerView
         recyclerViewContacts.setLayoutManager(new LinearLayoutManager(this));
 
-        // Thực hiện lấy dữ liệu từ cơ sở dữ liệu và thêm vào Adapter
-        DBHelper dbHelper = new DBHelper(this);
-        List<Contact> contacts = dbHelper.getAllContacts();
-        contactAdapter.setContacts(contacts);
+        // Load danh sách liên hệ và hiển thị trên RecyclerView
+        loadContactList();
 
-        // Xử lý sự kiện khi nhấn nút "Thêm người liên hệ mới"
+        // Xử lý sự kiện nút "Thêm người liên hệ mới"
         buttonAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,13 +76,7 @@ public class KontactActivity extends AppCompatActivity {
         loadContactList();
     }
 
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Gọi phương thức refresh trang hiện tại ở đây
-            refreshCurrentPage();
-        }
-    };
+
 
     // Trong phương thức onResume() của KontactActivity
     @Override
@@ -124,6 +125,7 @@ public class KontactActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        // Hủy đăng ký BroadcastReceiver
         unregisterReceiver(broadcastReceiver);
     }
 
@@ -185,5 +187,20 @@ public class KontactActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setMessage("Bạn có muốn thoát ứng dụng?")
+                .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finishAffinity(); // Kết thúc tất cả các activity trong task stack
+                    }
+                })
+                .setNegativeButton("Không", null)
+                .show();
     }
 }
