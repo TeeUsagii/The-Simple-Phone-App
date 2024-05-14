@@ -1,6 +1,8 @@
 package exemple.com.simple_phone;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -128,12 +130,19 @@ public class DialerActivity extends AppCompatActivity {
     }
 
     public void onContactsButtonClicked(View view) {
-        Intent intent = new Intent(this, KontactActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+        finish();
     }
 
     public void onDialerButtonClicked(View view) {
 ;
+    }
+
+    @Override
+    public void onBackPressed() {
+        App.showExitConfirmationDialog(this);
     }
 
 }

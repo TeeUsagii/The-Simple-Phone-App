@@ -4,13 +4,23 @@
     android:orientation="vertical"
     android:padding="20dp">
 
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thêm liên hệ mới"
+        android:textSize="24sp"
+        android:layout_marginBottom="15dp"
+        android:textStyle="bold" />
+
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilTitle"
+        android:id="@+id/tilTitleADD"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
         <EditText
-            android:id="@+id/edtTitle"
+            android:id="@+id/edtTitleADD"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Tên" />
@@ -18,13 +28,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilPhone"
+        android:id="@+id/tilPhoneADD"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp">
 
         <EditText
-            android:id="@+id/edtPhone"
+            android:id="@+id/edtPhoneADD"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Số điện thoại"
@@ -40,17 +50,17 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnCancel"
+            android:id="@+id/btnCancelADD"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="40dp"
             android:text="Hủy" />
 
         <Button
-            android:id="@+id/btnSave"
+            android:id="@+id/btnSaveADD"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="lưu" />
+            android:text="Lưu" />
 
     </LinearLayout>
 

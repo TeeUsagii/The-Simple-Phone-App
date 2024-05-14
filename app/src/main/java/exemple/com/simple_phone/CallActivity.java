@@ -24,7 +24,7 @@ public class CallActivity extends  Activity {
     private TextView callInfo;
     private  TextView callInfoNumber;
     private  TextView callInfoState;
-    private DBHelper dbHelper;
+    private DbHelper dbHelper;
 
 
     @Override
@@ -34,7 +34,7 @@ public class CallActivity extends  Activity {
 
         setTitle("Điện thoại");
 
-        dbHelper = new DBHelper(this);
+        dbHelper = new DbHelper(this);
 
         answer = findViewById(R.id.answer);
         hangup = findViewById(R.id.hangup);
