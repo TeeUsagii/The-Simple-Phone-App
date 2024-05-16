@@ -1,9 +1,13 @@
 package exemple.com.simple_phone;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.role.RoleManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -25,8 +33,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity {
+import android.content.pm.PackageManager;
+import android.telecom.TelecomManager;
 
+
+public class MainActivity extends AppCompatActivity {
+    private static final int REQUEST_CODE_PERMISSION = 1002;
+    private static final int REQUEST_CODE_SET_DEFAULT_DIALER = 1001;
     ContactDAO contactDAO;
 
     List<Contact> list = new ArrayList<>();
@@ -39,6 +52,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().setTitle("Danh bạ");
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CODE_PERMISSION);
+        } else {
+            // Quyền đã được cấp, yêu cầu đặt làm ứng dụng gọi mặc định
+            requestSetDefaultDialer();
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestSetDefaultDialer();
+        }
 
         RecyclerView rvContact = findViewById(R.id.rvContact);
         FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
@@ -89,6 +112,42 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    private void requestSetDefaultDialer() {
+        RoleManager roleManager = (RoleManager) getSystemService(Context.ROLE_SERVICE);
+        if (roleManager.isRoleAvailable(RoleManager.ROLE_DIALER)) {
+            if (roleManager.isRoleHeld(RoleManager.ROLE_DIALER)) {
+            } else {
+                Intent intent = roleManager.createRequestRoleIntent(RoleManager.ROLE_DIALER);
+                startActivityForResult(intent, REQUEST_CODE_SET_DEFAULT_DIALER);
+            }
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_SET_DEFAULT_DIALER) {
+            if (resultCode == RESULT_OK) {
+            } else {
+                Toast.makeText(this, "Không thể đặt ứng dụng làm ứng dụng gọi mặc định", Toast.LENGTH_SHORT).show();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Quyền đã được cấp, yêu cầu đặt làm ứng dụng gọi mặc định
+                requestSetDefaultDialer();
+            } else {
+                Toast.makeText(this, "Quyền CALL_PHONE bị từ chối", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 
     public void onContactsButtonClicked(View view) {
 

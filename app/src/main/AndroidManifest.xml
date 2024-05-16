@@ -4,6 +4,7 @@
     package="exemple.com.simple_phone">
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="31"
@@ -51,6 +52,7 @@
                 android:name="android.telecom.IN_CALL_SERVICE_UI"
                 android:value="true" />
             <intent-filter>
+                <action android:name="android.telecom.CallRedirectionService" />
                 <action android:name="android.telecom.InCallService" />
             </intent-filter>
         </service>
