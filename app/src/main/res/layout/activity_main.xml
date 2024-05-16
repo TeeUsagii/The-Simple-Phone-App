@@ -6,13 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-    
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvContact"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomNavigation">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAdd"

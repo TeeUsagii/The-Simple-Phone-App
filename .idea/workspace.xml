@@ -38,18 +38,6 @@
           <theme>@style/AppTheme</theme>
         </config>
       </layout>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/contact_detail.xml">
-        <config>
-          <state>landscape</state>
-          <theme>@style/AppTheme</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/contact_item.xml">
-        <config>
-          <state>landscape</state>
-          <theme>@style/AppTheme</theme>
-        </config>
-      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_add_contact.xml">
         <config>
           <theme>@style/AppTheme</theme>
@@ -58,11 +46,6 @@
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/edit_contact_dialog.xml">
         <config>
           <state>landscape</state>
-          <theme>@style/AppTheme</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/kontact.xml">
-        <config>
           <theme>@style/AppTheme</theme>
         </config>
       </layout>
@@ -162,7 +145,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "E:/WorkspaceHDD/Android/The-Simple-Phone-App/app/src/main/res/layout",
+    "last_opened_file_path": "E:/WorkspaceHDD/Android/android-samples/tutorials/java/MapWithMarker",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.0",
@@ -172,10 +155,12 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\WorkspaceHDD\Android\The-Simple-Phone-App\app\src\main\res" />
       <recent name="E:\WorkspaceHDD\Android\The-Simple-Phone-App\app\src\main\res\layout" />
       <recent name="E:\WorkspaceHDD\Android\The-Simple-Phone-App\app\src\main\java\exemple\com\simple_phone" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\WorkspaceHDD\Android\The-Simple-Phone-App\app\src\main\res\drawable" />
       <recent name="E:\WorkspaceHDD\Android\simple-phone\app\src\main\res\drawable" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
