@@ -51,7 +51,7 @@ Phone Calling Application
 
 **1. Clone the repository:**
    ```sh
-   git clone https://github.com/your-username/phone-calling-application.git
+   git clone https://github.com/TeeUsagii/The-Simple-Phone-App.git
    ```
 **2. Open the project in Android Studio:**
    - Launch Android Studio.
